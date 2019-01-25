@@ -40,7 +40,6 @@ app.post('/twitter-user', async(req, res) => {
                 }
             });
         }
-        console.log('userToken:', userToken);
         let session = await Session.findById(userToken);
         let { token, secret } = await getAccessToken(oauth_token, session.secret, oauth_verifier);
         let { token: user } = await verifyCredentials(token, secret);
