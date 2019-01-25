@@ -1,4 +1,4 @@
-require('./config/config.js');
+require('../config/config');
 const twitterAPI = require('node-twitter-api');
 const tAPI = new twitterAPI({
     consumerKey: process.env.consumerKey,
