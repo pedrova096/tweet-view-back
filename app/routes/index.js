@@ -1,9 +1,8 @@
-const Session = require('../models/session');
-
 const express = require('express');
-const app = express();
+const Session = require('../models/session');
+const { getRequestToken, getAccessToken, verifyCredentials, getTimeline } = require("../helper/tweet-api");
 
-const { getRequestToken, getAccessToken, verifyCredentials, getTimeline } = require("../util/tweet-api");
+const app = express();
 
 app.get('/twitter-login', async(req, res) => {
     try {
@@ -36,7 +35,7 @@ app.post('/twitter-user', async(req, res) => {
         if (!(oauth_token && oauth_verifier && userToken)) {
             return res.status(400).json({
                 error: {
-                    message: "Faltan parametros requeridos para obtener el usuario"
+                    message: "Faltan parámetros requeridos para obtener el usuario"
                 }
             });
         }
