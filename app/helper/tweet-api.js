@@ -5,23 +5,21 @@ const tAPI = new twitterAPI({
     consumerSecret: process.env.consumerSecret,
     callback: process.env.twitterCallback
 });
-let _promisifyTW = (f, ...args) => {
-    f = f.bind(tAPI);
+
+const promisifyTW = (func, ...args) => {
+    func = func.bind(tAPI);
     return new Promise((done, error) =>
-        args ? f(...args, (err, token, secret) => err ? error(err) : done({ token, secret })) :
-        f((err, token, secret) => err ? error(err) : done({ token, secret }))
+        args ? func(...args, (err, token, secret) => err ? error(err) : done({ token, secret })) :
+            func((err, token, secret) => err ? error(err) : done({ token, secret }))
     );
 }
-module.exports = {
-    getRequestToken: () =>
-        _promisifyTW(tAPI.getRequestToken),
-    getAccessToken: (token, secret, verifier) =>
-        _promisifyTW(tAPI.getAccessToken, token, secret, verifier),
-    verifyCredentials: (token, secret) =>
-        _promisifyTW(tAPI.verifyCredentials, token, secret),
-    //User as Token, Response as Secret 
-    getTimeline: (type, params, token, secret) =>
-        _promisifyTW(tAPI.getTimeline, type, params, token, secret),
-    //Data as Token, Response as Secret 
 
+const changeOfName = (promise = new Promise, param1 = "token", param2 = "secret") =>
+    new Promise((done, error) => promise.then(data => done({ [param1]: data.token, [param2]: data.secret })).catch(error));
+
+module.exports = {
+    getRequestToken: () => promisifyTW(tAPI.getRequestToken),
+    getAccessToken: (token, secret, verifier) => promisifyTW(tAPI.getAccessToken, token, secret, verifier),
+    verifyCredentials: (token, secret) => changeOfName(promisifyTW(tAPI.verifyCredentials, token, secret), "user"),
+    getTimeline: (type, params, token, secret) => changeOfName(promisifyTW(tAPI.getTimeline, type, params, token, secret),"data","response")
 }
