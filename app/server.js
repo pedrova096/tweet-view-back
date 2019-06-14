@@ -1,6 +1,4 @@
 require('../config.js');
-
-const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -15,7 +13,7 @@ app.use(cors());
 
 app.use(require('./routes'));
 
-connect(process.env.URLDB);
+connect(process.env.URL_DB);
 
 app.listen(process.env.PORT, () => {
     console.log('Escuchando puerto: ', process.env.PORT);
