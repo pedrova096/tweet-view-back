@@ -31,7 +31,6 @@ app.get('/twitter-login', async(req, res) => {
 app.post('/twitter-user', async(req, res) => {
     try {
         let { oauth_token, oauth_verifier, userToken } = req.body;
-
         if (!(oauth_token && oauth_verifier && userToken)) {
             return res.status(400).json({
                 error: {
@@ -41,7 +40,8 @@ app.post('/twitter-user', async(req, res) => {
         }
         let session = await Session.findById(userToken);
         let { token, secret } = await getAccessToken(oauth_token, session.secret, oauth_verifier);
-        let { token: user } = await verifyCredentials(token, secret);
+        let {user} = await verifyCredentials(token, secret);
+
         session = await Session.findByIdAndUpdate(userToken, { user: user.id_str, token, secret });
 
         res.status(200).json({

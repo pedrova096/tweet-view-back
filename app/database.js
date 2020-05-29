@@ -1,6 +1,6 @@
-const mongoose = requiere('mongoose');
+const mongoose = require('mongoose');
 
-module.export.connect =  async (URL_DB) => {
+module.exports.connect =  async (URL_DB) => {
   try {
     await mongoose.connect(URL_DB,{
       useNewUrlParser: true
