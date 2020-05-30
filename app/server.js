@@ -2,7 +2,6 @@ require('../config.js');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const path = require('path');
 const { connect } = require('./database');
 
 const app = express();
