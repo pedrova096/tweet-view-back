@@ -81,7 +81,8 @@ app.post('/user-tweets', async(req, res) => {
         });
     } catch (error) {
         return res.status(500).json({
-            error
+            error: error.message,
+            ok: false,
         });
     }
 });
