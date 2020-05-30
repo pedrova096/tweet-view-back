@@ -74,6 +74,7 @@ app.post('/user-tweets', async(req, res) => {
             user_id: session.user,
             count: 100
         }, session.token, session.secret);
+        console.log({data});
 
         return res.json({
             ok: true,
