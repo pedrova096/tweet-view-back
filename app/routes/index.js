@@ -70,7 +70,7 @@ app.post('/user-tweets', async(req, res) => {
         }
 
         let session = await Session.findById(userToken);
-        let { token: data } = await getTimeline("user_timeline", {
+        let data = await getTimeline("user_timeline", {
             user_id: session.user,
             count: 100
         }, session.token, session.secret);
