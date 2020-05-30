@@ -1,5 +1,8 @@
 require('../../config.js');
 const twitterAPI = require('node-twitter-api');
+
+console.log({["process.env.twitterCallback"]: process.env.twitterCallback});
+
 const tAPI = new twitterAPI({
     consumerKey: process.env.consumerKey,
     consumerSecret: process.env.consumerSecret,
