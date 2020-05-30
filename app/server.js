@@ -9,7 +9,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
+app.use(cors("https://tweet-view-front.now.sh"));
 
 app.use(require('./routes'));
 
